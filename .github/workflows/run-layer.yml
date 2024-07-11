@@ -1,0 +1,20 @@
+name: Run layer.sh on tag push
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on tags starting with 'v'
+
+jobs:
+  run-layer:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Make layer.sh executable
+        run: chmod +x layer.sh
+
+      - name: Run layer.sh
+        run: ./layer.sh
