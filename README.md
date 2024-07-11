@@ -20,8 +20,8 @@ This script helps you generate an AWS Lambda Layer for different versions of Pyt
 1. **Clone the repository or download the script:**
 
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone https://github.com/Charlesbhattarai/aws-lambda-layer-generator
+   cd aws-lambda-layer-generator
 
 2. **Run the script:**
 
