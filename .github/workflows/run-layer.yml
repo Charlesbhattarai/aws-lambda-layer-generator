@@ -1,12 +1,12 @@
-name: Run layer.sh on tag push
+name: Package Python AWS Layer
 
 on:
   push:
     tags:
-      - 'v1.0.0'  # Trigger on tags starting with 'v'
+      - 'v*'  # Trigger on tags starting with 'v'
 
 jobs:
-  run-layer:
+  package:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,3 +18,9 @@ jobs:
 
       - name: Run layer.sh
         run: ./layer.sh
+
+      - name: Upload layer artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: layer-artifact
+          path: aws-layer/$LAYER_NAME.zip
