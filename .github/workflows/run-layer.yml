@@ -3,7 +3,7 @@ name: Run layer.sh on tag push
 on:
   push:
     tags:
-      - 'v*'  # Trigger on tags starting with 'v'
+      - 'v1.0.0'  # Trigger on tags starting with 'v'
 
 jobs:
   run-layer:
