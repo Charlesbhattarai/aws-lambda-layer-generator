@@ -2,8 +2,7 @@ name: Package Python AWS Layer
 
 on:
   push:
-    tags:
-      - 'v*'  # Trigger on tags starting with 'v'
+    branches: [ main ]
 
 jobs:
   package:
