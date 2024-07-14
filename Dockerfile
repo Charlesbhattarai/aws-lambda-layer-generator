@@ -31,9 +31,5 @@ RUN pip install --upgrade pip
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Expose both ports for FastAPI and Streamlit
-EXPOSE 8000
-EXPOSE 8501
-
 # Command to run FastAPI and Streamlit concurrently
 CMD ["bash", "-c", "uvicorn app:app & streamlit run ui.py"]
