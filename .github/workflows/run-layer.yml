@@ -2,24 +2,39 @@ name: Package Python AWS Layer
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  package:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Make layer.sh executable
-        run: chmod +x layer.sh
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-      - name: Run layer.sh
-        run: ./layer.sh
-
-      - name: Upload layer artifact
-        uses: actions/upload-artifact@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
         with:
-          name: layer-artifact
-          path: aws-layer/$LAYER_NAME.zip
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/aws-lambda-layer-generator:latest
+
+      - name: Run Docker container
+        run: |
+          docker run -v /var/run/docker.sock:/var/run/docker.sock -p 8000:8000 -p 8501:8501 ${{ secrets.DOCKER_USERNAME }}/aws-lambda-layer-generator:latest

@@ -1,1 +1,4 @@
-pydantic
+fastapi
+uvicorn
+streamlit
+requests
